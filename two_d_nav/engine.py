@@ -27,6 +27,18 @@ class NavigationEngine:
                 if event.type == pygame.QUIT:
                     running = False
 
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        self.robot.move(-config.robot_vel, 0)
+                    elif event.key == pygame.K_RIGHT:
+                        self.robot.move(config.robot_vel, 0)
+                    elif event.key == pygame.K_UP:
+                        self.robot.move(0, -config.robot_vel)
+                    elif event.key == pygame.K_DOWN:
+                        self.robot.move(0, config.robot_vel)
+
+                print(self.robot.x, self.robot.y)
+
             self.screen.fill((255, 255, 255))
             self.screen.blit(*self.robot.render_info())
 

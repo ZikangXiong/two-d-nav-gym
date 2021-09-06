@@ -1,3 +1,4 @@
 import os
 
 root = os.path.dirname(os.path.abspath(__file__))
+robot_vel = 10.0
