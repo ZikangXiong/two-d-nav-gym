@@ -6,18 +6,18 @@ import pygame
 from two_d_nav import config
 
 
-class Robot:
-    def __init__(self, init_x: float, init_y: float):
-        self.init_x = init_x
-        self.init_y = init_y
+class ObjectBase:
+    def __init__(self, image_path: str, shape: Tuple, init_x: float, init_y: float):
+        self.image = pygame.image.load(image_path)
+        self.shape = shape
+        self.image = pygame.transform.scale(self.image, self.shape)
+
         self.x = init_x
         self.y = init_y
+        self.init_x = init_x
+        self.init_y = init_y
         self.prev_x = init_x
         self.prev_y = init_y
-
-        self.image = pygame.image.load(f"{config.root}/assets/robot.png")
-        self.shape = (45, 45)
-        self.image = pygame.transform.scale(self.image, self.shape)
 
     def center(self):
         return int(self.x + self.shape[0] / 2), \
@@ -41,36 +41,25 @@ class Robot:
         self.y = self.prev_y
 
 
-class Obstacle:
+class Robot(ObjectBase):
+    def __init__(self, init_x: float, init_y: float):
+        super(Robot, self).__init__(f"{config.root}/assets/robot.png",
+                                    (45, 45),
+                                    init_x, init_y)
+
+
+class Obstacle(ObjectBase):
+    def __init__(self, init_x: float, init_y: float):
+        super(Obstacle, self).__init__(f"{config.root}/assets/obstacle.png",
+                                       (45, 45),
+                                       init_x, init_y)
+
+
+class Goal(ObjectBase):
     def __init__(self, x: float, y: float):
-        self.x = x
-        self.y = y
-        self.image = pygame.image.load(f"{config.root}/assets/obstacle.png")
-        self.shape = (45, 45)
-        self.image = pygame.transform.scale(self.image, self.shape)
-
-    def render_info(self):
-        return self.image, (int(self.x), int(self.y))
-
-    def center(self):
-        return int(self.x + self.shape[0] / 2), \
-               int(self.y + self.shape[1] / 2)
-
-
-class Goal:
-    def __init__(self, x: float, y: float):
-        self.x = x
-        self.y = y
-        self.image = pygame.image.load(f"{config.root}/assets/goal.png")
-        self.shape = (45, 45)
-        self.image = pygame.transform.scale(self.image, self.shape)
-
-    def render_info(self):
-        return self.image, (int(self.x), int(self.y))
-
-    def center(self):
-        return int(self.x + self.shape[0] / 2), \
-               int(self.y + self.shape[1] / 2)
+        super(Goal, self).__init__(f"{config.root}/assets/goal.png",
+                                   (45, 45),
+                                   x, y)
 
 
 class Maze:
