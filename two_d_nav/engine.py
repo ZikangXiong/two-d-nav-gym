@@ -84,7 +84,9 @@ class NavigationEngine:
                 self.robot.stay()
 
             # plot robot
-            self.screen.blit(*self.robot.render_info())
+            robot_image, robot_pos = self.robot.render_info()
+            robot_image = pygame.transform.rotate(robot_image, self.robot.heading())
+            self.screen.blit(robot_image, robot_pos)
 
             # obstacle collision detection
             for obs in obs_list:

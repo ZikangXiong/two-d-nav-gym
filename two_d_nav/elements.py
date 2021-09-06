@@ -1,6 +1,7 @@
 import copy
 from typing import List, Tuple
 
+import numpy as np
 import pygame
 
 from two_d_nav import config
@@ -19,9 +20,28 @@ class ObjectBase:
         self.prev_x = init_x
         self.prev_y = init_y
 
+        self.kept_heading = None
+
     def center(self):
         return int(self.x + self.shape[0] / 2), \
                int(self.y + self.shape[1] / 2)
+
+    def heading(self):
+        if self.kept_heading is not None:
+            return self.kept_heading
+
+        if self.prev_x == self.x and self.prev_y == self.y:
+            return 0
+
+        dx = self.x - self.prev_x
+        dy = self.y - self.prev_y
+        r = np.linalg.norm([dx, dy], ord=2)
+        angle = -np.arcsin(dx / r) / np.pi * 180
+
+        if dy > 0:
+            angle = 180 - angle
+
+        return angle
 
     def render_info(self):
         return self.image, (int(self.x), int(self.y))
@@ -32,11 +52,15 @@ class ObjectBase:
         self.x += dx
         self.y += dy
 
+        if self.kept_heading is not None:
+            self.kept_heading = None
+
     def reset(self):
         self.x = self.init_x
         self.y = self.init_y
 
     def stay(self):
+        self.kept_heading = self.heading()
         self.x = self.prev_x
         self.y = self.prev_y
 
