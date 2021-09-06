@@ -65,11 +65,11 @@ class ObjectBase:
         self.y = self.prev_y
 
 
-class Robot(ObjectBase):
+class VelRobot(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
-        super(Robot, self).__init__(f"{config.root}/assets/robot.png",
-                                    (45, 45),
-                                    init_x, init_y)
+        super(VelRobot, self).__init__(f"{config.root}/assets/robot.png",
+                                       (45, 45),
+                                       init_x, init_y)
 
 
 class Obstacle(ObjectBase):
@@ -96,7 +96,7 @@ class Maze:
 
 
 def create_open_space() -> Maze:
-    return Maze([], goal_pos=(50, 50))
+    return Maze([], goal_pos=(400, 400))
 
 
 def create_maze(indx=0) -> Maze:

@@ -4,11 +4,11 @@ import pygame
 import numpy as np
 
 from two_d_nav import config
-from two_d_nav.elements import Robot, Obstacle, Maze, create_maze, Goal
+from two_d_nav.elements import VelRobot, Obstacle, Maze, create_maze, Goal
 
 
 class NavigationEngine:
-    def __init__(self, robot: Robot, obstacle_list: List[Obstacle], maze: Maze):
+    def __init__(self, robot: VelRobot, obstacle_list: List[Obstacle], maze: Maze):
         pygame.init()
         self.screen = pygame.display.set_mode((800, 800))
 
@@ -46,7 +46,7 @@ class NavigationEngine:
         return False
 
     def run(self):
-        # game loop
+        # game loop, only for test purpose, see the environment in the envs folder.
         running = True
         while running:
             for event in pygame.event.get():
@@ -89,7 +89,7 @@ class NavigationEngine:
             self.screen.blit(robot_image, robot_pos)
 
             # obstacle collision detection
-            for obs in obs_list:
+            for obs in self.obstacle_list:
                 if self.hit_object(obs):
                     self.screen.fill((255, 0, 0))
                     self.robot.reset()
@@ -102,12 +102,20 @@ class NavigationEngine:
             pygame.display.update()
 
 
-if __name__ == '__main__':
-    _robot = Robot(100, 700)
-    obs1 = Obstacle(200.0, 600.0)
+def test_engine():
+    # See the environment in the envs folder.
+    _robot = VelRobot(100, 700)
+    obs1 = Obstacle(400.0, 600.0)
     obs2 = Obstacle(700.0, 100.0)
-    obs_list = [obs1, obs2]
+    obs3 = Obstacle(300.0, 500.0)
+    obs4 = Obstacle(150.0, 200.0)
+    obs5 = Obstacle(350.0, 250.0)
+    obs_list = [obs1, obs2, obs3, obs4, obs5]
     _maze = create_maze(1)
 
     eng = NavigationEngine(_robot, obs_list, _maze)
     eng.run()
+
+
+if __name__ == '__main__':
+    test_engine()
