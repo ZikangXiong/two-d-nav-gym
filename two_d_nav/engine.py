@@ -14,7 +14,12 @@ class NavigationEngine:
 
         pygame.display.set_caption("2D robot navigation")
         icon = pygame.image.load(f"{config.root}/assets/robot.png")
-        pygame.display.set_icon(icon)
+
+        try:
+            pygame.display.set_icon(icon)
+        except Exception:
+            import os
+            os.environ["SDL_VIDEODRIVER"] = "dummy"
 
         self.robot = robot
         self.obstacle_list = obstacle_list
