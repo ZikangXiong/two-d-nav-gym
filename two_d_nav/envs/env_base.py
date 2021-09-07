@@ -54,7 +54,7 @@ class Navigation(gym.Env):
         self.engine.robot.x = state[0]
         self.engine.robot.y = state[1]
 
-        return normalize_pos(state)
+        return self.obs()
 
     def render(self, mode="human"):
         self.engine.render()
