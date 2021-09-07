@@ -1,6 +1,6 @@
 # 2D Navigation Environment
 
-Pure-python based, light-weight reinforcement learning environments.
+Pure-python-based, lightweight reinforcement learning environments.
 
 ## Task Description
 
@@ -31,7 +31,7 @@ The sweeping robot should
 
 ```
 
-## Robots
+## Robot
 
 We only support one simple robot for now.
 

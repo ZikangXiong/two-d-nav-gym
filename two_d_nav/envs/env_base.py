@@ -11,15 +11,22 @@ class Navigation(gym.Env):
     def __init__(self, engine: NavigationEngine):
         self.engine = engine
 
+    def obs(self):
+        state = np.array([self.engine.robot.x, self.engine.robot.y])
+        normalized_state = normalize_pos(state)
+        dist_to_goal = self.engine.dist_goal()
+
+        return np.concatenate([normalized_state, dist_to_goal])
+
     def step(self, action: np.ndarray, **kwargs):
         assert (action <= 1.0).all() and (action >= -1.0).all(), "action should in the range of [-1, 1]"
 
         scaled_action = action * config.robot_vel_scale
-        state = self.engine.robot.move(*scaled_action)
-        normalized_state = normalize_pos(state)
+        self.engine.robot.move(*scaled_action)
+        _obs = self.obs()
+        dist_to_goal = _obs[2:]
 
-        dist_to_goal = self.engine.dist_goal()
-        reward = np.exp(-config.reward_sensitive * dist_to_goal)
+        reward = np.exp(-config.reward_sensitive * np.sum(dist_to_goal))
         done = False
 
         reach_goal, hit_obstacle, hit_wall = self.engine.get_robot_status()
@@ -38,7 +45,7 @@ class Navigation(gym.Env):
             self.engine.robot.reset()
             done = True
 
-        return normalized_state, reward, done, {}
+        return _obs, reward, done, {}
 
     def reset(self, state: np.ndarray = None):
         if state is None:

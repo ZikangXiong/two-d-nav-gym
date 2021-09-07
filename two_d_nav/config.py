@@ -13,4 +13,4 @@ reach_goal_reward = 100
 hit_obstacle_reward = -100
 hit_wall_reward = -5
 
-reward_sensitive = 5.0
+reward_sensitive = 1.0
