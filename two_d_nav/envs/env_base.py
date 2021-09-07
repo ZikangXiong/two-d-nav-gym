@@ -40,9 +40,14 @@ class Navigation(gym.Env):
 
         return normalized_state, reward, done, {}
 
-    def reset(self, state: np.ndarray):
+    def reset(self, state: np.ndarray = None):
+        if state is None:
+            state = np.array([100, 700])
+
         self.engine.robot.x = state[0]
         self.engine.robot.y = state[1]
+
+        return normalize_pos(state)
 
     def render(self, mode="human"):
         self.engine.render()
