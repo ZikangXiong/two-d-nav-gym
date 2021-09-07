@@ -46,7 +46,7 @@ class ObjectBase:
     def render_info(self):
         return self.image, (int(self.x), int(self.y))
 
-    def move(self, dx, dy):
+    def move(self, dx, dy) -> np.ndarray:
         self.prev_x = self.x
         self.prev_y = self.y
         self.x += dx
@@ -54,6 +54,8 @@ class ObjectBase:
 
         if self.kept_heading is not None:
             self.kept_heading = None
+
+        return np.array([self.x, self.y])
 
     def reset(self):
         self.x = self.init_x
