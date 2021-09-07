@@ -15,9 +15,9 @@ The sweeping robot should
 
 ```shell
 ├── tests                   # test cases
-│   ├── test_engine.py
-│   ├── test_open_space.py
-│   └── test_static_maze.py
+│   ├── test_engine.py
+│   ├── test_open_space.py
+│   └── test_static_maze.py
 └── two_d_nav/
     ├── assets/             # images
     ├── config.py           # configuration of environment
@@ -38,9 +38,9 @@ We only support one simple robot for now.
 ### VelRobot
 
 This robot is simply modeled with 2 states - the x-position and y-position. We suppose that the velocity of the robot
-can be controled as we wish. For simplicity, we use the velocity as control signal directly, which means that if we tell
-the robot to go to certain velocity, it can achieve in the next moment. This is an unrealistically simple setting.
-However, this robot is modeled with continuous state and action, thus it can be very challenge for algorithm like DQN.
+can be controlled as we wish. For simplicity, we use the velocity as control signal directly, which means that if we tell
+the robot to go to a certain velocity, it can achieve in the next moment. This is an unrealistically simple setting.
+However, this robot is modeled with continuous state and action, thus it can be very challenge for algorithms like DQN.
 The complex maze setting is also a great challenge for non-hierarchical reinforcement learning algorithms like SAC, TD3,
 DDPG or PPO, etc.
 
@@ -48,7 +48,7 @@ DDPG or PPO, etc.
 
 ### Create gym Environment
 
-The code below created a static maze navigation task and moved, rendered the environment.
+The code below created a static maze navigation task and moved, rendering the environment.
 
 ```python
 import numpy as np
@@ -65,7 +65,7 @@ for i in range(60):
 
 ### Play
 
-Unlike gym environment, play with keyboard only supports 4 directions control (up, down, left, and right).
+Unlike the gym environments, playing with a keyboard only supports 4 directions control (up, down, left, and right).
 
 One can start the keyboard control with following code
 
