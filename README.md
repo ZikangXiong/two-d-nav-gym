@@ -14,11 +14,16 @@ The sweeping robot should
 ## Project Structure
 
 ```shell
+├── tests                   # test cases
+│   ├── test_engine.py
+│   ├── test_open_space.py
+│   └── test_static_maze.py
 └── two_d_nav/
-    ├── assets/             # Images
+    ├── assets/             # images
     ├── config.py           # configuration of environment
     ├── elements.py         # elements in the task, e.g, robot, maze
     ├── engine.py           # simulator engine
+    ├── engine.py           # utils
     └── envs/               # gym wrappers for the environment
         ├── env_base.py     # base class
         ├── open_space.py   # only has robot and charger in the environment
@@ -41,15 +46,29 @@ DDPG or PPO, etc.
 
 ## Example
 
-### Play
-Unlike gym environment, play with keyboard only supports 4 directions control (up, down, left, and right). 
-```shell
-python two_2_nav/engine.py
-```
-
 ### Create gym Environment
+
+The code below created a static maze navigation task and moved, rendered the environment.
+
 ```python
+import numpy as np
+
 from two_d_nav.envs import static_maze
 
-env = static_maze.StaticMazeEnv()
+env = static_maze.StaticMazeNavigation()
+obs = env.reset()
+
+for i in range(60):
+    obs, reward, done, _ = env.step(np.array([1.0, -0.1]))
+    env.render()
+```
+
+### Play
+
+Unlike gym environment, play with keyboard only supports 4 directions control (up, down, left, and right).
+
+One can start the keyboard control with following code
+
+```shell
+python tests/test_engine.py
 ```
