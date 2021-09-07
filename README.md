@@ -22,7 +22,7 @@ The sweeping robot should
     ├── assets/             # images
     ├── config.py           # configuration of environment
     ├── elements.py         # elements in the task, e.g, robot, maze
-    ├── engine.py           # simulator engine
+    ├── engine.py           # simulation engine
     ├── engine.py           # utils
     └── envs/               # gym wrappers for the environment
         ├── env_base.py     # base class
