@@ -50,7 +50,7 @@ def create_board(lines, obs_list):
   board = define_obstables(board, obs_list)
   return board, board_size, board_size
 
-def deconstructPath(path, row, col):
+def deconstruct_path(path):
   actions = []
   current = path[0]
 
@@ -67,7 +67,7 @@ def deconstructPath(path, row, col):
     current = next
   return actions
 
-def runSearch(board, board_rows, board_cols):
+def run_search(board, board_rows, board_cols):
   start = Location(c.START_POS_X, c.START_POS_Y)
   goal = Location(c.GOAL_POS_X, c.GOAL_POS_Y)
 
@@ -75,11 +75,10 @@ def runSearch(board, board_rows, board_cols):
   ag = Agent(state)
   path, pathCost = ag.a_star_search(start, goal)
 
-  actions = deconstructPath(path, board_rows, board_cols)
+  actions = deconstruct_path(path)
   return actions
 
-def printActions(actions):
-  hi = 9
+def print_actions(actions):
   current = actions[0]
   counter = 0
   for i in range(len(actions)):
@@ -104,10 +103,10 @@ def test_engine():
     obs_list = [obs1, obs2, obs3, obs4, obs5]
     _maze = create_maze(1)
     board, board_rows, board_cols = create_board(_maze.lines, obs_list)
-    actions = runSearch(board, board_rows, board_cols)
+    actions = run_search(board, board_rows, board_cols)
 
     print("\n\nFollowing are the actions to take:\n")
-    printActions(actions)
+    print_actions(actions)
     print("\n\n")
 
     eng = NavigationEngine(_robot, obs_list, _maze)
