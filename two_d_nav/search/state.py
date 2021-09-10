@@ -1,4 +1,4 @@
-import constants as c
+import two_d_nav.search.constants as c
 from two_d_nav.search.location import Location
 
 

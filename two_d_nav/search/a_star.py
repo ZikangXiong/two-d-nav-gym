@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 
-import constants as c
+import two_d_nav.search.constants as c
 
 
 class Agent:
