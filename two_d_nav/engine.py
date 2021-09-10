@@ -46,8 +46,6 @@ class NavigationEngine:
         # plot goal
         self.screen.blit(*goal)
 
-        reach_goal, hit_obstacle, hit_wall = self.get_robot_status()
-
         # plot robot
         robot_image, robot_pos = self.robot.render_info()
         robot_image = pygame.transform.rotate(robot_image, self.robot.heading())
