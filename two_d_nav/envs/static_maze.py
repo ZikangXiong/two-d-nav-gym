@@ -21,3 +21,13 @@ class StaticMazeNavigation(Navigation):
         engine = NavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
 
         super(StaticMazeNavigation, self).__init__(engine)
+
+    def reset(self, state: np.ndarray = None):
+        if state is None:
+            state = np.array([100, 700])
+
+        self.engine.robot.x = state[0]
+        self.engine.robot.y = state[1]
+
+        return self.obs()
+

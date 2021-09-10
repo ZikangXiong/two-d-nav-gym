@@ -9,8 +9,8 @@ map_size = (800, 800)
 
 robot_vel_scale = 10.0
 
-reach_goal_reward = 100
-hit_obstacle_reward = -100
+reach_goal_reward = 20
+hit_obstacle_reward = -20
 hit_wall_reward = -5
 
 reward_sensitive = 1.0
