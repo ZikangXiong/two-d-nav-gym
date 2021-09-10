@@ -12,11 +12,7 @@ class Navigation(gym.Env):
         self.engine = engine
 
     def obs(self):
-        state = np.array([self.engine.robot.x, self.engine.robot.y])
-        normalized_state = normalize_pos(state)
-        dist_to_goal = self.engine.dist_goal()
-
-        return np.concatenate([normalized_state, dist_to_goal])
+        return self.engine.dist_goal()
 
     def step(self, action: np.ndarray, **kwargs):
         assert (action <= 1.0).all() and (action >= -1.0).all(), "action should in the range of [-1, 1]"
