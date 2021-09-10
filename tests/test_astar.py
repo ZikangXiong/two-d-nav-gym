@@ -1,7 +1,3 @@
-import sys
-sys.path.append('../')
-sys.path.append('../../')
-
 from two_d_nav.elements import VelRobot, Obstacle, create_maze
 from two_d_nav.engine import NavigationEngine
 from search.state import State
