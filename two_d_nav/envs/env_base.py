@@ -10,6 +10,10 @@ class Navigation(gym.Env):
 
     def __init__(self, engine: NavigationEngine):
         self.engine = engine
+        self.observation_space = gym.spaces.Box(low=np.array([-2, -2], dtype=np.float32),
+                                                high=np.array([2, 2], dtype=np.float32))
+        self.action_space = gym.spaces.Box(low=np.array([-1, -1], dtype=np.float32),
+                                           high=np.array([1, 1], dtype=np.float32))
 
     def obs(self):
         return self.engine.dist_goal()
