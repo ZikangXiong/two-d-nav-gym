@@ -12,5 +12,6 @@ robot_vel_scale = 10.0
 reach_goal_reward = 20
 hit_obstacle_reward = -20
 hit_wall_reward = -5
+step_penalty = -0.1
 
 reward_sensitive = 1.0

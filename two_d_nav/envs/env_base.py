@@ -33,12 +33,12 @@ class Navigation(gym.Env):
 
         if reach_goal:
             reward += config.reach_goal_reward
-            self.engine.robot.reset()
+            self.reset()
             done = True
 
         if hit_obstacle:
             reward += config.hit_obstacle_reward
-            self.engine.robot.reset()
+            self.reset()
             done = True
 
         # compute reward advantage
@@ -46,6 +46,8 @@ class Navigation(gym.Env):
             self.prev_reward = reward
         reward_adv = reward - self.prev_reward
         self.prev_reward = reward
+
+        reward_adv += config.step_penalty
 
         return reward_adv, done
 
