@@ -68,7 +68,7 @@ class NavigationEngine:
         # distance to goal in the normalize coordinator
         robot_pos = normalize_pos(np.array([self.robot.x, self.robot.y]))
         goal_pos = normalize_pos(np.array([self.maze.goal.x, self.maze.goal.y]))
-        dist = robot_pos - goal_pos
+        dist = goal_pos - robot_pos
 
         return dist
 
