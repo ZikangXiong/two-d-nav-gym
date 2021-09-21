@@ -18,5 +18,5 @@ class Location:
     def __gt__(self, other):
         return self.operation(other) > 0
 
-    def __str__(self) -> str:
-        return "(" + self.row + ", " + self.col + ")"
+    def __repr__(self) -> str:
+        return f"({self.row}, {self.col})"
