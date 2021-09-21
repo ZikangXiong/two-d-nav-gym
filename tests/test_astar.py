@@ -1,8 +1,8 @@
 import numpy as np
 
-from two_d_nav.search import constants as c
 from two_d_nav.elements import VelRobot, Obstacle, create_maze
 from two_d_nav.engine import NavigationEngine
+from two_d_nav.search import constants as c
 from two_d_nav.search.a_star import Agent
 from two_d_nav.search.location import Location
 from two_d_nav.search.state import State
