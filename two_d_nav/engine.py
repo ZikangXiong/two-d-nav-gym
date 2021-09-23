@@ -1,11 +1,11 @@
 from typing import List, Union
 
-import pygame
 import numpy as np
+import pygame
 
 from two_d_nav import config
-from two_d_nav.elements import VelRobot, Obstacle, Maze, create_maze, Goal
-from two_d_nav.utils import normalize_pos
+from two_d_nav.elements import VelRobot, Obstacle, Maze, Goal
+from two_d_nav.utils import normalize_pos, denormalize_pos
 
 
 class NavigationEngine:
@@ -25,6 +25,14 @@ class NavigationEngine:
         self.obstacle_list = obstacle_list
         self.maze = maze
 
+        self.plan_lines = []
+
+    def set_plan(self, plan: np.ndarray, denormalize: bool = False):
+        assert plan.shape[1:] == (2, ), f"shape {plan.shape[1:]} == (2, )"
+        if denormalize:
+            plan = denormalize_pos(plan)
+        self.plan_lines = np.stack([plan[:-1], plan[1:]], axis=1)
+
     def render(self):
         # call other functions before calling it
         if self.screen is None:
@@ -42,6 +50,10 @@ class NavigationEngine:
         # plot walls
         for line in walls:
             pygame.draw.line(self.screen, *line)
+
+        # plot plan
+        for plan_line in self.plan_lines:
+            pygame.draw.line(self.screen, "green", plan_line[0], plan_line[1], 1)
 
         # plot goal
         self.screen.blit(*goal)

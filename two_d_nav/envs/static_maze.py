@@ -1,8 +1,7 @@
 import numpy as np
-
 from two_d_nav.elements import create_maze, VelRobot, Obstacle
-from two_d_nav.envs.env_base import Navigation
 from two_d_nav.engine import NavigationEngine
+from two_d_nav.envs.env_base import Navigation
 
 
 class StaticMazeNavigation(Navigation):
@@ -13,8 +12,9 @@ class StaticMazeNavigation(Navigation):
         obs2 = Obstacle(700.0, 100.0)
         obs3 = Obstacle(300.0, 500.0)
         obs4 = Obstacle(150.0, 200.0)
-        obs5 = Obstacle(350.0, 250.0)
-        obs_list = [obs1, obs2, obs3, obs4, obs5]
+        obs5 = Obstacle(200.0, 330.0)
+        obs6 = Obstacle(350.0, 250.0)
+        obs_list = [obs1, obs2, obs3, obs4, obs5, obs6]
 
         maze = create_maze(indx=1)
 
@@ -30,4 +30,3 @@ class StaticMazeNavigation(Navigation):
         self.engine.robot.y = state[1]
 
         return self.obs()
-
