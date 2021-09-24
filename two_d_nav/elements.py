@@ -8,10 +8,10 @@ from two_d_nav import config
 
 
 class ObjectBase:
-    def __init__(self, image_path: str, shape: Tuple, init_x: float, init_y: float):
+    def __init__(self, image_path: str, shape: np.ndarray, init_x: float, init_y: float):
         self.image = pygame.image.load(image_path)
         self.shape = shape
-        self.image = pygame.transform.scale(self.image, self.shape)
+        self.image = pygame.transform.scale(self.image, tuple(self.shape))
 
         self.x = init_x
         self.y = init_y
@@ -70,21 +70,21 @@ class ObjectBase:
 class VelRobot(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
         super(VelRobot, self).__init__(f"{config.root}/assets/robot.png",
-                                       (45, 45),
+                                       np.array((45, 45)),
                                        init_x, init_y)
 
 
 class Obstacle(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
         super(Obstacle, self).__init__(f"{config.root}/assets/obstacle.png",
-                                       (45, 45),
+                                       np.array((45, 45)),
                                        init_x, init_y)
 
 
 class Goal(ObjectBase):
     def __init__(self, x: float, y: float):
         super(Goal, self).__init__(f"{config.root}/assets/goal.png",
-                                   (45, 45),
+                                   np.array((45, 45)),
                                    x, y)
 
 

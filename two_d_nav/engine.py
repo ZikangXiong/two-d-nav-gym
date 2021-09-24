@@ -2,13 +2,12 @@ from typing import List, Union
 
 import numpy as np
 import pygame
-
 from two_d_nav import config
 from two_d_nav.elements import VelRobot, Obstacle, Maze, Goal
 from two_d_nav.utils import normalize_pos, denormalize_pos
 
 
-class NavigationEngine:
+class MazeNavigationEngine:
     def __init__(self, robot: VelRobot, obstacle_list: List[Obstacle], maze: Maze):
         self.screen = None
 
@@ -28,7 +27,7 @@ class NavigationEngine:
         self.plan_lines = []
 
     def set_plan(self, plan: np.ndarray, denormalize: bool = False):
-        assert plan.shape[1:] == (2, ), f"shape {plan.shape[1:]} == (2, )"
+        assert plan.shape[1:] == (2,), f"shape {plan.shape[1:]} == (2, )"
         if denormalize:
             plan = denormalize_pos(plan)
         self.plan_lines = np.stack([plan[:-1], plan[1:]], axis=1)
@@ -85,17 +84,19 @@ class NavigationEngine:
         return dist
 
     def hit_wall(self) -> bool:
+        robot_pos = np.array(self.robot.center())
+        robot_shape = np.array(self.robot.shape)
+
         for line in self.maze.lines:
             point_1 = np.array(line[1])
             point_2 = np.array(line[2])
-            upper = np.max([point_1 + config.wall_collision_threshold,
-                            point_2 + config.wall_collision_threshold], axis=0)
-            lower = np.min([point_1 - config.wall_collision_threshold,
-                            point_2 - config.wall_collision_threshold], axis=0)
 
-            robot_pos = np.array(self.robot.center())
+            line_high = np.max([point_1 + (robot_shape / 2 - 10),
+                                point_2 + (robot_shape / 2 - 10)], axis=0)
+            line_low = np.min([point_1 - (robot_shape / 2 - 10),
+                               point_2 - (robot_shape / 2 - 10)], axis=0)
 
-            if (robot_pos < upper).all() and (robot_pos > lower).all():
+            if (robot_pos < line_high).all() and (robot_pos > line_low).all():
                 return True
         return False
 
@@ -136,3 +137,7 @@ class NavigationEngine:
                 self.robot.reset()
 
             self.render()
+
+
+class FlightsWaypointFollowEngine:
+    pass

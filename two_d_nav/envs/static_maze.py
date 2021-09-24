@@ -1,6 +1,7 @@
 import numpy as np
+
 from two_d_nav.elements import create_maze, VelRobot, Obstacle
-from two_d_nav.engine import NavigationEngine
+from two_d_nav.engine import MazeNavigationEngine
 from two_d_nav.envs.env_base import Navigation
 
 
@@ -18,7 +19,7 @@ class StaticMazeNavigation(Navigation):
 
         maze = create_maze(indx=1)
 
-        engine = NavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
+        engine = MazeNavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
 
         super(StaticMazeNavigation, self).__init__(engine)
 

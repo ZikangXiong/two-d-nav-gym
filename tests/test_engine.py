@@ -1,5 +1,5 @@
 from two_d_nav.elements import VelRobot, Obstacle, create_maze
-from two_d_nav.engine import NavigationEngine
+from two_d_nav.engine import MazeNavigationEngine
 
 
 def test_engine():
@@ -13,7 +13,7 @@ def test_engine():
     obs_list = [obs1, obs2, obs3, obs4, obs5]
     _maze = create_maze(1)
 
-    eng = NavigationEngine(_robot, obs_list, _maze)
+    eng = MazeNavigationEngine(_robot, obs_list, _maze)
     eng.run()
 
 

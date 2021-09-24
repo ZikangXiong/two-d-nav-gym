@@ -1,7 +1,7 @@
 import numpy as np
 
 from two_d_nav.elements import VelRobot, Obstacle, create_maze
-from two_d_nav.engine import NavigationEngine
+from two_d_nav.engine import MazeNavigationEngine
 from two_d_nav.search import constants as c
 from two_d_nav.search.a_star import Agent
 from two_d_nav.search.location import Location
@@ -110,7 +110,7 @@ def test_engine():
     print_actions(actions)
     print("\n\n")
 
-    eng = NavigationEngine(_robot, obs_list, _maze)
+    eng = MazeNavigationEngine(_robot, obs_list, _maze)
     eng.run()
 
 

@@ -3,13 +3,13 @@ from typing import Tuple
 import gym
 import numpy as np
 
-from two_d_nav.engine import NavigationEngine
+from two_d_nav.engine import MazeNavigationEngine
 from two_d_nav import config
 
 
 class Navigation(gym.Env):
 
-    def __init__(self, engine: NavigationEngine):
+    def __init__(self, engine: MazeNavigationEngine):
         self.engine = engine
         self.observation_space = gym.spaces.Box(low=np.array([-2, -2], dtype=np.float32),
                                                 high=np.array([2, 2], dtype=np.float32))
