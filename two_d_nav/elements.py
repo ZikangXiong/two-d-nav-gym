@@ -74,24 +74,31 @@ class VelRobot(ObjectBase):
                                        init_x, init_y)
 
 
-class Obstacle(ObjectBase):
+class Cat(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
-        super(Obstacle, self).__init__(f"{config.root}/assets/obstacle.png",
-                                       np.array((45, 45)),
-                                       init_x, init_y)
+        super(Cat, self).__init__(f"{config.root}/assets/cat.png",
+                                  np.array((45, 45)),
+                                  init_x, init_y)
 
 
-class Goal(ObjectBase):
+class Charger(ObjectBase):
     def __init__(self, x: float, y: float):
-        super(Goal, self).__init__(f"{config.root}/assets/goal.png",
-                                   np.array((45, 45)),
-                                   x, y)
+        super(Charger, self).__init__(f"{config.root}/assets/charger.png",
+                                      np.array((45, 45)),
+                                      x, y)
+
+
+class Flight(ObjectBase):
+    def __init__(self, x: float, y: float):
+        super(Flight, self).__init__(f"{config.root}/assets/flight.png",
+                                     np.array((45, 45)),
+                                     x, y)
 
 
 class Maze:
     def __init__(self, lines: List[Tuple], goal_pos: Tuple[float, float]):
         self.lines = lines
-        self.goal = Goal(*goal_pos)
+        self.goal = Charger(*goal_pos)
 
     def render_info(self):
         return self.lines, self.goal.render_info()

@@ -2,13 +2,14 @@ from typing import List, Union
 
 import numpy as np
 import pygame
+
 from two_d_nav import config
-from two_d_nav.elements import VelRobot, Obstacle, Maze, Goal
+from two_d_nav.elements import VelRobot, Cat, Maze, Charger, Flight
 from two_d_nav.utils import normalize_pos, denormalize_pos
 
 
 class MazeNavigationEngine:
-    def __init__(self, robot: VelRobot, obstacle_list: List[Obstacle], maze: Maze):
+    def __init__(self, robot: VelRobot, obstacle_list: List[Cat], maze: Maze):
         self.screen = None
 
         pygame.display.set_caption("2D robot navigation")
@@ -100,7 +101,7 @@ class MazeNavigationEngine:
                 return True
         return False
 
-    def hit_object(self, obj: Union[Goal, Obstacle]) -> bool:
+    def hit_object(self, obj: Union[Charger, Cat]) -> bool:
         dx = self.robot.x - obj.x
         dy = self.robot.y - obj.y
 
@@ -139,5 +140,43 @@ class MazeNavigationEngine:
             self.render()
 
 
-class FlightsWaypointFollowEngine:
-    pass
+class FlightsEngine:
+    def __init__(self, flights: List[Flight]):
+        self.flights = flights
+        self.screen = None
+
+        pygame.display.set_caption("Flights")
+        icon = pygame.image.load(f"{config.root}/assets/flight.png")
+
+        try:
+            pygame.display.set_icon(icon)
+        except Exception:
+            import os
+            os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+        self.plan_groups = [[]]
+
+    def set_plan_groups(self, plan_groups):
+        self.plan_groups = plan_groups
+
+    def render(self):
+        if self.screen is None:
+            pygame.init()
+            self.screen = pygame.display.set_mode((800, 800))
+
+        # white background
+        self.screen.fill((255, 255, 255))
+
+        # plot plan
+        for plan_group in self.plan_groups:
+            for plan_line in plan_group:
+                for segment in plan_line:
+                    pygame.draw.line(self.screen, "green", segment[0], segment[1], 1)
+
+        # plot flights
+        for flight in self.flights:
+            robot_image, robot_pos = flight.render_info()
+            robot_image = pygame.transform.rotate(robot_image, flight.heading())
+            self.screen.blit(robot_image, robot_pos)
+
+        pygame.display.update()
