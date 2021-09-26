@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from two_d_nav.envs.three_flights import ThreeFlights
+from two_d_nav.envs.three_flights_envs import ThreeFlights
 
 
 class TestThreeFlights(TestCase):

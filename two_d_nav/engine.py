@@ -1,11 +1,11 @@
-from typing import List, Union
+from typing import List, Union, Callable, Optional
 
 import numpy as np
 import pygame
 
 from two_d_nav import config
-from two_d_nav.elements import VelRobot, Cat, Maze, Charger, Flight
-from two_d_nav.utils import normalize_pos, denormalize_pos
+from two_d_nav.elements import VelRobot, Cat, Maze, Charger, Flight, Car, ObjectBase
+from two_d_nav.utils import normalize_pos, denormalize_pos, draw_dashed_line
 
 
 class MazeNavigationEngine:
@@ -178,5 +178,89 @@ class FlightsEngine:
             robot_image, robot_pos = flight.render_info()
             robot_image = pygame.transform.rotate(robot_image, flight.heading())
             self.screen.blit(robot_image, robot_pos)
+
+        pygame.display.update()
+
+
+class CarEngine:
+    def __init__(self,
+                 ego_car: Car,
+                 other_cars: List[Car],
+                 static_objects: Optional[List[ObjectBase]] = None):
+        self.ego_car = ego_car
+        self.other_cars = other_cars
+
+        self.screen = None
+        self.static_objects = static_objects
+
+        pygame.display.set_caption("Car")
+        icon = pygame.image.load(f"{config.root}/assets/car.png")
+
+        try:
+            pygame.display.set_icon(icon)
+        except Exception:
+            import os
+            os.environ["SDL_VIDEODRIVER"] = "dummy"
+
+        self.plan_lines = []
+        self.road_lines = [{"line": [], "type": "solid"}]
+
+    def set_plan(self, plan: np.ndarray, denormalize: bool = False):
+        assert plan.shape[1:] == (2,), f"shape {plan.shape[1:]} == (2, )"
+        if denormalize:
+            plan = denormalize_pos(plan)
+        self.plan_lines = np.stack([plan[:-1], plan[1:]], axis=1)
+
+    def plot_plan(self):
+        for segment in self.plan_lines:
+            pygame.draw.line(self.screen, "green", segment[0], segment[1], 1)
+
+    def plot_road(self):
+        for road_line in self.road_lines:
+            _type = road_line["type"]
+            segments = np.stack([road_line["line"][:-1], road_line["line"][1:]], axis=1)
+
+            for segment in segments:
+                if _type == "dashed":
+                    draw_dashed_line(self.screen, "black", segment[0], segment[1], 1)
+                else:
+                    pygame.draw.line(self.screen, "black", segment[0], segment[1], 1)
+
+    def plot_cars(self):
+        # plot ego car
+        robot_image, robot_pos = self.ego_car.render_info()
+        robot_image = pygame.transform.rotate(robot_image, self.ego_car.heading())
+        self.screen.blit(robot_image, robot_pos)
+
+        # plot other cars
+        for car in self.other_cars:
+            robot_image, robot_pos = car.render_info()
+            robot_image = pygame.transform.rotate(robot_image, car.heading())
+            self.screen.blit(robot_image, robot_pos)
+
+    def plot_static_objects(self):
+        if self.static_objects:
+            for obj in self.static_objects:
+                self.screen.blit(*obj.render_info())
+
+    def render(self):
+        if self.screen is None:
+            pygame.init()
+            self.screen = pygame.display.set_mode((800, 800))
+
+        # white background
+        self.screen.fill((255, 255, 255))
+
+        # plot plan
+        self.plot_plan()
+
+        # plot road
+        self.plot_road()
+
+        # plot cars
+        self.plot_cars()
+
+        # plot other objects
+        self.plot_static_objects()
 
         pygame.display.update()

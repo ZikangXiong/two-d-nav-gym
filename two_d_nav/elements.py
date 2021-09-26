@@ -95,6 +95,20 @@ class Flight(ObjectBase):
                                      x, y)
 
 
+class Car(ObjectBase):
+    def __init__(self, x: float, y: float):
+        super(Car, self).__init__(f"{config.root}/assets/Car.png",
+                                  np.array((45, 45)),
+                                  x, y)
+
+
+class Goal(ObjectBase):
+    def __init__(self, x: float, y: float):
+        super(Goal, self).__init__(f"{config.root}/assets/goal.png",
+                                   np.array((45, 45)),
+                                   x, y)
+
+
 class Maze:
     def __init__(self, lines: List[Tuple], goal_pos: Tuple[float, float]):
         self.lines = lines

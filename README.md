@@ -59,7 +59,7 @@ env = static_maze.StaticMazeNavigation()
 obs = env.reset()
 
 for i in range(60):
-    obs, reward, done, _ = env.step(np.array([1.0, -0.1]))
+    obs, reward, done, _ = env.step(np.array([1.0, -0.1]), )
     env.render()
 ```
 
