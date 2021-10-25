@@ -156,8 +156,8 @@ class FlightsEngine:
 
         self.plan_groups = [[]]
 
-    def set_plan_groups(self, plan_groups):
-        self.plan_groups = plan_groups
+    def set_plan(self, plan):
+        self._plan = plan
 
     def render(self):
         if self.screen is None:
@@ -168,10 +168,9 @@ class FlightsEngine:
         self.screen.fill((255, 255, 255))
 
         # plot plan
-        for plan_group in self.plan_groups:
-            for plan_line in plan_group:
-                for segment in plan_line:
-                    pygame.draw.line(self.screen, "green", segment[0], segment[1], 1)
+        for plan_line in self._plan:
+            for segment in plan_line:
+                pygame.draw.line(self.screen, "green", segment[0], segment[1], 1)
 
         # plot flights
         for flight in self.flights:

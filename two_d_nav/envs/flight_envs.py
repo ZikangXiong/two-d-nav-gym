@@ -7,11 +7,9 @@ from two_d_nav.engine import FlightsEngine
 from two_d_nav.elements import Flight
 
 
-class ThreeFlights(gym.Env):
+class FlightEnv(gym.Env):
     def __init__(self):
-        self.f1 = Flight(200, 700)
-        self.f2 = Flight(300, 700)
-        self.f3 = Flight(400, 700)
+        self.flight = Flight(300, 700)
 
         self.engine = FlightsEngine([self.f1, self.f2, self.f3])
         self.t = 0
@@ -47,7 +45,6 @@ class ThreeFlights(gym.Env):
         self.f1.move(*a1)
         self.f2.move(*a2)
         self.f3.move(*a3)
-        time.sleep(0.01)
         self.res.append([self.f1.x, self.f1.y])
 
     def reset(self, **kwargs):
