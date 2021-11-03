@@ -1,11 +1,12 @@
-from typing import List, Union, Optional
+from typing import List, Optional, Union
 
 import numpy as np
 import pygame
 
 from two_d_nav import config
-from two_d_nav.elements import VelRobot, Cat, Maze, Charger, Flight, Car, ObjectBase
-from two_d_nav.utils import normalize_pos, denormalize_pos, draw_dashed_line
+from two_d_nav.elements import (Car, Cat, Charger, Flight, Maze, ObjectBase,
+                                VelRobot)
+from two_d_nav.utils import denormalize_pos, draw_dashed_line, normalize_pos
 
 
 class MazeNavigationEngine:
@@ -92,10 +93,10 @@ class MazeNavigationEngine:
             point_1 = np.array(line[1])
             point_2 = np.array(line[2])
 
-            line_high = np.max([point_1 + (robot_shape / 2 - 10),
-                                point_2 + (robot_shape / 2 - 10)], axis=0)
-            line_low = np.min([point_1 - (robot_shape / 2 - 10),
-                               point_2 - (robot_shape / 2 - 10)], axis=0)
+            line_high = np.max([point_1 + (robot_shape / 2 - config.robot_vel_scale),
+                                point_2 + (robot_shape / 2 - config.robot_vel_scale)], axis=0)
+            line_low = np.min([point_1 - (robot_shape / 2 - config.robot_vel_scale),
+                               point_2 - (robot_shape / 2 - config.robot_vel_scale)], axis=0)
 
             if (robot_pos < line_high).all() and (robot_pos > line_low).all():
                 return True

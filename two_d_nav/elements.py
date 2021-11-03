@@ -23,8 +23,7 @@ class ObjectBase:
         self.kept_heading = None
 
     def center(self):
-        return int(self.x + self.shape[0] / 2), \
-            int(self.y + self.shape[1] / 2)
+        return int(self.x), int(self.y)
 
     def heading(self):
         if self.kept_heading is not None:
@@ -44,7 +43,7 @@ class ObjectBase:
         return angle
 
     def render_info(self):
-        return self.image, (int(self.x), int(self.y))
+        return self.image, (int(self.x - self.shape[0] / 2), int(self.y - self.shape[1] / 2))
 
     def move(self, dx, dy) -> np.ndarray:
         self.prev_x = self.x
@@ -127,7 +126,7 @@ def create_maze(indx=0) -> Maze:
     line1 = (0, [10, 790], [790, 790], 5)
     line2 = (0, [790, 790], [790, 10], 5)
     line3 = (0, [790, 10], [10, 10], 5)
-    goal_pos = (50.0, 50.0)
+    goal_pos = (100, 100)
 
     frame = [line0, line1, line2, line3]
     if indx == 0:
