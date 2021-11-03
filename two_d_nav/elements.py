@@ -24,7 +24,7 @@ class ObjectBase:
 
     def center(self):
         return int(self.x + self.shape[0] / 2), \
-               int(self.y + self.shape[1] / 2)
+            int(self.y + self.shape[1] / 2)
 
     def heading(self):
         if self.kept_heading is not None:
@@ -70,42 +70,42 @@ class ObjectBase:
 class VelRobot(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
         super(VelRobot, self).__init__(f"{config.root}/assets/robot.png",
-                                       np.array((45, 45)),
+                                       np.array((30, 30)),
                                        init_x, init_y)
 
 
 class Cat(ObjectBase):
     def __init__(self, init_x: float, init_y: float):
         super(Cat, self).__init__(f"{config.root}/assets/cat.png",
-                                  np.array((45, 45)),
+                                  np.array((30, 30)),
                                   init_x, init_y)
 
 
 class Charger(ObjectBase):
     def __init__(self, x: float, y: float):
         super(Charger, self).__init__(f"{config.root}/assets/charger.png",
-                                      np.array((45, 45)),
+                                      np.array((30, 30)),
                                       x, y)
 
 
 class Flight(ObjectBase):
     def __init__(self, x: float, y: float):
         super(Flight, self).__init__(f"{config.root}/assets/flight.png",
-                                     np.array((45, 45)),
+                                     np.array((30, 30)),
                                      x, y)
 
 
 class Car(ObjectBase):
     def __init__(self, x: float, y: float):
         super(Car, self).__init__(f"{config.root}/assets/Car.png",
-                                  np.array((45, 45)),
+                                  np.array((30, 30)),
                                   x, y)
 
 
 class Goal(ObjectBase):
     def __init__(self, x: float, y: float):
         super(Goal, self).__init__(f"{config.root}/assets/goal.png",
-                                   np.array((45, 45)),
+                                   np.array((30, 30)),
                                    x, y)
 
 
@@ -144,3 +144,5 @@ def create_maze(indx=0) -> Maze:
         maze_lines.extend([wall0, wall1, wall2, wall3, wall4, wall5, wall6])
 
         return Maze(maze_lines, goal_pos)
+    else:
+        raise NotImplementedError()

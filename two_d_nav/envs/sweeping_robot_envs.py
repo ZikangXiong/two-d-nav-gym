@@ -4,7 +4,7 @@ import gym
 import numpy as np
 
 from two_d_nav import config
-from two_d_nav.elements import create_maze, VelRobot, Cat, create_open_space
+from two_d_nav.elements import Cat, VelRobot, create_maze, create_open_space
 from two_d_nav.engine import MazeNavigationEngine
 
 
@@ -53,7 +53,9 @@ class Navigation(gym.Env):
         return reward_adv, done
 
     def step(self, action: np.ndarray, **kwargs):
-        assert (action <= 1.0).all() and (action >= -1.0).all(), "action should in the range of [-1, 1]"
+        assert(
+            action <= 1.0).all() and (
+            action >= -1.0).all(), "action should in the range of [-1, 1]"
 
         scaled_action = action * config.robot_vel_scale
         self.engine.robot.move(*scaled_action)
@@ -95,9 +97,8 @@ class StaticMazeNavigation(Navigation):
         obs2 = Cat(700.0, 100.0)
         obs3 = Cat(300.0, 500.0)
         obs4 = Cat(150.0, 200.0)
-        obs5 = Cat(200.0, 330.0)
-        obs6 = Cat(350.0, 250.0)
-        obs_list = [obs1, obs2, obs3, obs4, obs5, obs6]
+        obs5 = Cat(350.0, 250.0)
+        obs_list = [obs1, obs2, obs3, obs4, obs5]
 
         maze = create_maze(indx=1)
 

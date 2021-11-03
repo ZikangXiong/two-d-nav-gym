@@ -3,7 +3,7 @@ import os
 root = os.path.dirname(os.path.abspath(__file__))
 
 wall_collision_threshold = 15
-obj_collision_threshold = 30
+obj_collision_threshold = 25
 
 map_size = (800, 800)
 

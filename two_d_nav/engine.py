@@ -1,4 +1,4 @@
-from typing import List, Union, Callable, Optional
+from typing import List, Union, Optional
 
 import numpy as np
 import pygame
