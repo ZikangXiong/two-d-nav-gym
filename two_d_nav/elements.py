@@ -141,7 +141,10 @@ def create_maze(indx=0) -> Maze:
         wall5 = (0, [500, 400], [650, 400], 5)
         wall6 = (0, [650, 200], [790, 200], 5)
         maze_lines.extend([wall0, wall1, wall2, wall3, wall4, wall5, wall6])
+    elif indx == 2:
+        goal_pos = (700, 400)
+        Maze(frame, goal_pos)
 
-        return Maze(maze_lines, goal_pos)
+        return Maze(frame, goal_pos)
     else:
         raise NotImplementedError()

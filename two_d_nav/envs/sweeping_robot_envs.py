@@ -12,8 +12,8 @@ class Navigation(gym.Env):
 
     def __init__(self, engine: MazeNavigationEngine):
         self.engine = engine
-        self.observation_space = gym.spaces.Box(low=np.array([-2, -2], dtype=np.float32),
-                                                high=np.array([2, 2], dtype=np.float32))
+        self.observation_space = gym.spaces.Box(low=np.array([-1, -1], dtype=np.float32),
+                                                high=np.array([1, 1], dtype=np.float32))
         self.action_space = gym.spaces.Box(low=np.array([-1, -1], dtype=np.float32),
                                            high=np.array([1, 1], dtype=np.float32))
         # For computing the advantage (first order derivative) of reward
@@ -136,3 +136,19 @@ class StaticMazeNavigation(Navigation):
             self.engine.robot.y = state[1]
 
         return self.obs()
+
+
+class CatParade(Navigation):
+    def __init__(self):
+        robot = VelRobot(100, 400)
+
+        obs_list = []
+        for i in range(20):
+            obs_list.append(Cat(100.0 + i * 30, 300.0))
+            obs_list.append(Cat(100.0 + i * 30, 500.0))
+
+        maze = create_maze(indx=2)
+
+        engine = MazeNavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
+
+        super(CatParade, self).__init__(engine)
