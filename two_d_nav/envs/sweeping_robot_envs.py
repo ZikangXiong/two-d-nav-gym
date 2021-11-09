@@ -148,7 +148,6 @@ class CatParade(Navigation):
             obs_list.append(Cat(100.0 + i * 30, 500.0))
 
         maze = create_maze(indx=2)
-
         engine = MazeNavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
 
         super(CatParade, self).__init__(engine)
