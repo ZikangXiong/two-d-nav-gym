@@ -25,6 +25,9 @@ class ObjectBase:
     def center(self):
         return int(self.x), int(self.y)
 
+    def accurate_center(self):
+        return self.x, self.y
+
     def heading(self):
         if self.kept_heading is not None:
             return self.kept_heading
