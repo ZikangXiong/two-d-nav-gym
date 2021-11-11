@@ -141,9 +141,9 @@ class CatParade(Navigation):
         robot = VelRobot(100, 400)
 
         obs_list = []
-        for i in range(20):
-            obs_list.append(Cat(100.0 + i * 30, 350.0))
-            obs_list.append(Cat(100.0 + i * 30, 450.0))
+        for i in range(23):
+            obs_list.append(Cat(10 + i * 30, 340.0))
+            obs_list.append(Cat(10 + i * 30, 460.0))
 
         maze = create_maze(indx=2)
         engine = MazeNavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
