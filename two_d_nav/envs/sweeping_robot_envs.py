@@ -51,9 +51,7 @@ class Navigation(gym.Env):
         return reward_adv, done
 
     def step(self, action: np.ndarray, **kwargs):
-        assert(
-            action <= 1.0).all() and (
-            action >= -1.0).all(), "action should in the range of [-1, 1]"
+        action = action.clip(-1, 1)
 
         scaled_action = action * config.robot_vel_scale
         self.engine.robot.move(*scaled_action)
@@ -144,10 +142,13 @@ class CatParade(Navigation):
 
         obs_list = []
         for i in range(20):
-            obs_list.append(Cat(100.0 + i * 30, 300.0))
-            obs_list.append(Cat(100.0 + i * 30, 500.0))
+            obs_list.append(Cat(100.0 + i * 30, 350.0))
+            obs_list.append(Cat(100.0 + i * 30, 450.0))
 
         maze = create_maze(indx=2)
         engine = MazeNavigationEngine(robot=robot, obstacle_list=obs_list, maze=maze)
 
         super(CatParade, self).__init__(engine)
+
+    def reset(self, state: np.ndarray = None):
+        return super().reset(state=np.array([100, 400]))
